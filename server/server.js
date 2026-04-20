@@ -79,10 +79,13 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
     } catch (err) {
         console.error('Failed to seed admin:', err);
     }
-
-    server.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
 }).catch((error) => {
     console.error('MongoDB connection error:', error);
+    // Do not exit the process, allow the server to keep running 
+    // so we can see the logs on Render instead of crashing quietly.
+});
+
+// Start the server immediately so Render's port binding health checks pass
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
