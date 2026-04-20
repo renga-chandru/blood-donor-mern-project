@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const authRoutes = require('./routes/authRoutes');
 const requestRoutes = require('./routes/requestRoutes');
@@ -42,6 +43,16 @@ app.use('/api/user', userRoutes);
 app.use('/api/donor', donorRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/blood-bank', bloodBankRoutes);
+
+// Serving Frontend in Production
+if (process.env.NODE_ENV === 'production') {
+    const buildPath = path.join(__dirname, '../client/dist');
+    app.use(express.static(buildPath));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(buildPath, 'index.html'));
+    });
+}
 
 const PORT = process.env.PORT || 5000;
 

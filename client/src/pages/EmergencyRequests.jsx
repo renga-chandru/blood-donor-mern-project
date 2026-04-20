@@ -12,7 +12,7 @@ export default function EmergencyRequests() {
     fetchRequests();
     
     // Set up Socket.io
-    const socket = io(import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5002');
     
     socket.on('newEmergencyRequest', (request) => {
       setRequests((prev) => [request, ...prev]);

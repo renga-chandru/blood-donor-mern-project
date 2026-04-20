@@ -12,7 +12,7 @@ import ImpactCard from '../components/ImpactCard';
 
 import { useAuth } from '../utils/AuthContext';
 
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5002');
+const socket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5002');
 
 export default function Dashboard() {
   const { user } = useAuth();
